@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+build
+.DS_Store
+*.pem
+.env*
+!.env.example
+next-env.d.ts
+.vercel
+tsconfig.tsbuildinfo
+
+# Local-only editor/agent overrides. launch.json is shared; this isn't.
+.claude/settings.local.json
