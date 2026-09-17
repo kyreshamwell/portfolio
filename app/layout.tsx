@@ -6,13 +6,13 @@ import { Loader } from "@/components/Loader";
 import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
-  title: `${site.name} — ${site.subline}`,
+  title: `${site.name} · ${site.subline}`,
   description: site.tagline,
-  // TODO: once deployed, set this to your real domain — it fixes social
+  // TODO: once deployed, set this to your real domain. It fixes social
   // previews and canonical URLs.
   // metadataBase: new URL("https://yourdomain.com"),
   openGraph: {
-    title: `${site.name} — ${site.subline}`,
+    title: `${site.name} · ${site.subline}`,
     description: site.tagline,
     type: "website",
   },

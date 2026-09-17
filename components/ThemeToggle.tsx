@@ -7,7 +7,7 @@ export type Theme = "light" | "dark";
 /**
  * Light/dark toggle.
  *
- * Writes `data-theme` on <html>, which flips the token block in globals.css —
+ * Writes `data-theme` on <html>, which flips the token block in globals.css 
  * every colour on the site derives from those variables, so nothing else has
  * to know the theme exists.
  *
@@ -34,7 +34,7 @@ export function ThemeToggle() {
     try {
       localStorage.setItem("theme", next);
     } catch {
-      /* private mode — the toggle still works for this session */
+      /* private mode. The toggle still works for this session */
     }
   };
 

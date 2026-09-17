@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
  * Two things it has to get right, and the naive version gets both wrong:
  *
  *   1. It must CLEAR. An observer that only sets the active id on intersection
- *      leaves the last section highlighted forever — jump back to the top and
+ *      leaves the last section highlighted forever. Jump back to the top and
  *      the underline is still sitting under Contact.
  *   2. It must start empty, not at ids[0]. The hero isn't a tracked section,
  *      so there is no correct default; anything else lights up a nav item
@@ -57,7 +57,7 @@ export function useScrollSpy(ids: string[]) {
       },
       {
         // Band across the middle of the viewport, so a section becomes active
-        // when it actually occupies the screen — not when its first pixel
+        // when it actually occupies the screen. Not when its first pixel
         // appears.
         rootMargin: "-25% 0px -25% 0px",
         threshold: [0, 0.15, 0.35, 0.6, 0.85, 1],

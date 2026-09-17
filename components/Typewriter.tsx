@@ -68,7 +68,7 @@ export function Typewriter({
         setText(word.slice(0, charIndex));
 
         if (charIndex === word.length) {
-          // Single word, no loop — stop here.
+          // Single word, no loop. Stop here.
           if (list.length === 1 && !loop) {
             setDone(true);
             onDone?.();
@@ -104,7 +104,7 @@ export function Typewriter({
     <span className={className}>
       {/* Zero-width sizer reserves the width of the longest string so the
           layout doesn't reflow as the text cycles. Only worth it when the
-          text actually rotates — for a single word it just duplicates the
+          text actually rotates. For a single word it just duplicates the
           string into the element's text content for no benefit. */}
       {list.length > 1 && (
         <span

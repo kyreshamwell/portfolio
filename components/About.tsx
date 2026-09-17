@@ -6,7 +6,7 @@ import { site } from "@/lib/site";
  *
  * Deliberately the narrowest section on the page. After a full-bleed hero and
  * a wide carousel, a tight single column is the contrast that makes the page
- * feel composed — same system, different rhythm.
+ * feel composed. Same system, different rhythm.
  */
 export function About() {
   return (

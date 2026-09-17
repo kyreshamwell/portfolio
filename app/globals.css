@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================================
- * DESIGN TOKENS — DARK (default)
+ * DESIGN TOKENS. DARK (default)
  * One accent. Three elevation steps. Every colour on the site derives from
  * these, so changing --color-accent re-skins the whole thing.
  * ==========================================================================*/
@@ -24,7 +24,7 @@
 }
 
 /* ============================================================================
- * DESIGN TOKENS — LIGHT
+ * DESIGN TOKENS. LIGHT
  * Same structure, same accent role. The accent darkens because #3d7eff on
  * white doesn't clear contrast for small text.
  * ==========================================================================*/

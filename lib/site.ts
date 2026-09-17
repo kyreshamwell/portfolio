@@ -1,5 +1,5 @@
 /* ============================================================================
- * SITE CONFIG — everything personal lives here.
+ * SITE CONFIG. Everything personal lives here.
  * Fill in every TODO below. Nothing else in the codebase hardcodes your info.
  * ==========================================================================*/
 
@@ -7,16 +7,13 @@ export const site = {
   // TODO: your full name, as you want it read.
   name: "Kyre Shamwell",
 
-  // TODO: your positioning line. This is the single most important sentence
-  // on the site. Rules:
-  //   - Say what you build and the angle you build it from.
-  //   - Must be specific enough that it couldn't describe anyone else.
-  //   - NOT "passionate developer building beautiful experiences."
-  // Example shape: "I build tools for problems I actually have — a credit
-  // tracker that tells you which card to pay first, and a window manager for
-  // macOS."
+  // The positioning line, and the single most important sentence on the site.
+  // It deliberately names no projects: the carousel below is the evidence, so
+  // this says how the work gets picked rather than what it happens to be.
+  // If you rewrite it, keep it specific enough that it couldn't describe
+  // anyone else.
   tagline:
-    "I build tools for problems I actually have — a credit tracker that does the payoff math, and a window manager for macOS.",
+    "I got into this for the thinking. Hand me a problem I don't know how to solve yet and I'll build my way to the bottom of it, then keep the tool if it turns out to be worth keeping.",
 
   // The typed hero line, one array entry per line. Typed in sequence, so the
   // second line starts once the first finishes.
@@ -34,21 +31,21 @@ export const site = {
 
   // TODO: fill these in.
   links: {
-    github: "https://github.com/TODO",
+    github: "https://github.com/kyreshamwell",
     linkedin: "https://linkedin.com/in/TODO",
-    // Optional — delete the line and the icon disappears from the header.
+    // Optional. Delete the line and the icon disappears from the header.
     x: "",
   },
 
   // TODO: drop your PDF at public/kyre-shamwell-resume.pdf
-  // Keep the filename professional — people see it in their download bar.
+  // Keep the filename professional. People see it in their download bar.
   resume: "/kyre-shamwell-resume.pdf",
 
-  // TODO: 2–4 short paragraphs. Human, not a cover letter. Who you are, how
+  // TODO: 2-4 short paragraphs. Human, not a cover letter. Who you are, how
   // you got here, what you're into. Keep it under ~150 words total.
   about: [
     "TODO: First paragraph. Who you are and what you're doing right now.",
-    "TODO: Second paragraph. How you got here — the honest version, not the LinkedIn version.",
+    "TODO: Second paragraph. How you got here, the honest version rather than the LinkedIn version.",
     "TODO: Third paragraph, optional. What you're looking for, or what you do when you're not building.",
   ],
 

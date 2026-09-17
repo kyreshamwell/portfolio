@@ -7,7 +7,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
  *
  * Roughly 90% of what reads as "designed" on a modern site is this one move:
  * start 20px low and transparent, slide up and fade in on entry, staggered.
- * Use it EVERYWHERE — consistency is what looks intentional.
+ * Use it EVERYWHERE. Consistency is what looks intentional.
  *
  * Built on IntersectionObserver + a CSS transition rather than a JS animation
  * library, deliberately:
@@ -46,7 +46,7 @@ export function Reveal({
       return;
     }
 
-    // Already on screen at mount (above the fold) — show now, don't wait.
+    // Already on screen at mount (above the fold). Show now, don't wait.
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight && rect.bottom > 0) {
       setShown(true);

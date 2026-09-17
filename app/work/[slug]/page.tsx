@@ -11,7 +11,7 @@ import { Reveal } from "@/components/Reveal";
  * shareable, and indexable. You want to be able to paste this URL into a job
  * application.
  *
- * Everything renders from lib/projects.ts — you write prose there, never here.
+ * Everything renders from lib/projects.ts. You write prose there, never here.
  */
 
 export function generateStaticParams() {
@@ -27,7 +27,7 @@ export async function generateMetadata({
   const project = getProject(slug);
   if (!project) return {};
   return {
-    title: `${project.title} — Case study`,
+    title: `${project.title}. Case study`,
     description: project.blurb,
   };
 }

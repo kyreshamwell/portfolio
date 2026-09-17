@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
  * A visible mailto address, not a form. Forms add friction and collect spam;
  * a recruiter wants to copy the address straight into their ATS.
  *
- * All four contact points live here AND in the header, on purpose — you don't
+ * All four contact points live here AND in the header, on purpose. You don't
  * get to know where someone stops scrolling.
  */
 
@@ -33,8 +33,8 @@ export function Contact() {
 
         <Reveal delay={0.05}>
           <h2 className="max-w-3xl text-3xl font-medium leading-tight tracking-tight sm:text-5xl">
-            Building something, hiring for something, or just want to talk about
-            it — my inbox is open.
+            Building something, hiring for something, or just want to talk
+            about it? My inbox is open.
           </h2>
         </Reveal>
 

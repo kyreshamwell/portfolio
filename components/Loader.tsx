@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 /**
- * Loading overlay — a curtain.
+ * Loading overlay. A curtain.
  *
  * Two panels meeting at the centre line, which part and slide off to the left
  * and right to reveal the page.
@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
  * 50%)` collapses TOWARD the centre, which is a curtain closing, not opening.
  * Splitting it means each half can travel outward independently.
  *
- * The panels invert automatically — they paint `bg-fg` over a `bg-bg` page,
+ * The panels invert automatically. They paint `bg-fg` over a `bg-bg` page,
  * and both tokens flip with the theme, so it's a light curtain on the dark
  * theme and a dark one on the light theme with no conditional logic.
  *
@@ -23,14 +23,14 @@ import { useEffect, useState } from "react";
  *   - Skipped entirely under prefers-reduced-motion.
  *
  * Built on CSS transitions and timeouts rather than a JS animation loop. This
- * is the one component where a stalled animation would be catastrophic — a
+ * is the one component where a stalled animation would be catastrophic. A
  * full-screen panel that never exits hides the entire site. Timeouts fire in
  * background tabs; requestAnimationFrame does not.
  */
 
 const MIN_MS = 700; // floor, so it doesn't flash on a warm cache
 const MAX_MS = 1500; // ceiling. Never let this grow.
-const EXIT_MS = 900; // the curtain travel — the part worth watching
+const EXIT_MS = 900; // the curtain travel. The part worth watching
 
 export function Loader() {
   const [mounted, setMounted] = useState(false);

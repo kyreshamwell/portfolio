@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 
 /**
- * Lenis smooth scroll — the base layer the rest of the motion sits on.
+ * Lenis smooth scroll. The base layer the rest of the motion sits on.
  *
  * Note the distinction that matters: this EASES the scroll, it does not TAKE
  * scroll away from the user. No scroll-jacking. Wheel, trackpad, keyboard and
@@ -53,8 +53,10 @@ export function SmoothScroll() {
       const el = document.querySelector(id);
       if (!el) return;
       e.preventDefault();
-      // Offset by the header height so the section's top edge clears it.
-      lenis.scrollTo(el as HTMLElement, { offset: -64 });
+      // No offset. Sections are a full viewport tall and centre their own
+      // content, so nudging down by the header height would push their last
+      // 64px below the fold. The header floats over the section's padding.
+      lenis.scrollTo(el as HTMLElement);
     };
     document.addEventListener("click", onClick);
 

@@ -9,7 +9,7 @@ import { useScrollSpy } from "@/lib/useScrollSpy";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 /**
- * Header — bare words over the page, no bar.
+ * Header. Bare words over the page, no bar.
  *
  * Two halves, as designed:
  *   left/center : plain text nav for INTERNAL navigation, with a 1px accent
@@ -19,7 +19,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
  *
  * Transparent at rest. Once you scroll past the hero, a backdrop-blur and a
  * hairline border fade in so the words stay legible over content. That's the
- * fix for a bar-less header — invisible when you want it invisible, readable
+ * fix for a bar-less header. Invisible when you want it invisible, readable
  * when it matters.
  */
 
@@ -77,7 +77,7 @@ export function Header() {
                       className="relative block px-3 py-1 text-sm transition-colors"
                     >
                       {/* Active item goes fully accent, not just white with a
-                          hairline under it — the whole word carries the
+                          hairline under it. The whole word carries the
                           highlight, which reads at a glance without needing a
                           pill or a bar behind it. */}
                       <span
@@ -136,7 +136,7 @@ export function Header() {
       </nav>
 
       {/* Mobile: the section nav collapses to nothing clever. Recruiters are
-          on mobile — this is not the place to experiment. */}
+          on mobile. This is not the place to experiment. */}
       {isHome && (
         <div className="flex items-center justify-center gap-1 pb-2 sm:hidden">
           {SECTIONS.map((s) => (

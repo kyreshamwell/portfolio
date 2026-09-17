@@ -21,7 +21,7 @@ import { projects, statusLabel, type Project } from "@/lib/projects";
  *   - autoplay, which pauses on hover, on focus, and when the tab is hidden
  *
  * If a project has no video, its poster image is used. Ship with posters, add
- * video later — nothing breaks.
+ * video later. Nothing breaks.
  */
 
 const AUTOPLAY_MS = 7000;
@@ -41,6 +41,8 @@ export function ProjectCarousel() {
   const [paused, setPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
+  /** True while a drag is in flight, so a swipe doesn't count as a click. */
+  const draggedRef = useRef(false);
 
   const go = useCallback(
     (dir: number) => setIndex((i) => (i + dir + n) % n),
@@ -97,7 +99,7 @@ export function ProjectCarousel() {
         className="relative mx-auto w-full select-none"
         style={{ perspective: "2000px" }}
       >
-        {/* SIZER — the only card in normal flow. It's invisible, and it exists
+        {/* SIZER. The only card in normal flow. It's invisible, and it exists
             purely to give the stage the exact height of the ACTIVE card at the
             current breakpoint. The alternative (hardcoded stage heights) breaks
             the moment the card's meta block wraps to two lines or stacks on
@@ -106,7 +108,13 @@ export function ProjectCarousel() {
           aria-hidden
           className="pointer-events-none invisible mx-auto w-[88%] max-w-3xl sm:w-[72%]"
         >
-          <Card project={projects[index]} isActive onSelect={() => {}} sizer />
+          <Card
+            project={projects[index]}
+            isActive
+            onSelect={() => {}}
+            draggedRef={draggedRef}
+            sizer
+          />
         </div>
 
         <motion.div
@@ -115,9 +123,18 @@ export function ProjectCarousel() {
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.12}
+          onDragStart={() => {
+            draggedRef.current = true;
+          }}
           onDragEnd={(_, info) => {
             if (info.offset.x < -60) go(1);
             else if (info.offset.x > 60) go(-1);
+            // Release on the next tick: the browser fires `click` after
+            // pointerup, so clearing this synchronously would let a swipe that
+            // ended on the artwork open the live site.
+            setTimeout(() => {
+              draggedRef.current = false;
+            }, 0);
           }}
         >
           {projects.map((project, i) => {
@@ -128,14 +145,14 @@ export function ProjectCarousel() {
                 key={project.slug}
                 className="absolute left-1/2 top-1/2 w-[88%] max-w-3xl sm:w-[72%]"
                 style={{ zIndex: 10 - Math.abs(d) }}
-                // Snap to the layout on mount rather than animating into it —
+                // Snap to the layout on mount rather than animating into it 
                 // without this the cards visibly drop into place on first
                 // paint, because y:-50% would animate up from zero.
                 initial={false}
                 animate={{
                   // Plain percentage rather than calc(). translateX % is
                   // relative to the element's own width, so the -50 centring
-                  // term folds straight into the offset — and Motion
+                  // term folds straight into the offset. And Motion
                   // interpolates a bare percentage far more reliably than a
                   // calc() expression.
                   x: `${d * 58 - 50}%`,
@@ -155,6 +172,7 @@ export function ProjectCarousel() {
                   project={project}
                   isActive={isActive}
                   onSelect={() => !isActive && setIndex(i)}
+                  draggedRef={draggedRef}
                 />
               </motion.article>
             );
@@ -167,7 +185,7 @@ export function ProjectCarousel() {
       </div>
 
       {/* ---- tab strip: same sliding-underline language as the header ---- */}
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-1">
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-1">
         {projects.map((p, i) => (
           <button
             key={p.slug}
@@ -200,7 +218,7 @@ export function ProjectCarousel() {
       </div>
 
       {/* ---- autoplay progress hairline ---- */}
-      <div className="mx-auto mt-4 h-px w-40 overflow-hidden bg-border">
+      <div className="mx-auto mt-3 h-px w-40 overflow-hidden bg-border">
         {!reduce && !paused && inView && (
           <motion.div
             key={index}
@@ -223,14 +241,17 @@ function Card({
   project,
   isActive,
   onSelect,
+  draggedRef,
   sizer = false,
 }: {
   project: Project;
   isActive: boolean;
   onSelect: () => void;
-  /** Rendered only to establish the stage height — skips media loading. */
+  draggedRef: React.RefObject<boolean>;
+  /** Rendered only to establish the stage height. Skips media loading. */
   sizer?: boolean;
 }) {
+  const artworkIsLink = isActive && !!project.href && !sizer;
   return (
     <div
       onClick={onSelect}
@@ -239,14 +260,37 @@ function Card({
       }`}
     >
       {/* media */}
-      {/* max-h caps the media on short viewports so the card's title, blurb
-          and buttons stay above the fold — the actions are the point of the
-          card, and a 16:10 still can push them off screen on a laptop. */}
-      <div className="relative aspect-[16/10] max-h-[40vh] w-full overflow-hidden bg-surface-2">
-        {!sizer && <Media project={project} isActive={isActive} />}
+      {/* Height cap, not width. Deriving the card's width from viewport height
+          was tried and is worse: a narrow card wraps the blurb onto more
+          lines, which grows the meta block and makes the section TALLER. */}
+      <div className="relative aspect-[16/10] max-h-[34vh] w-full overflow-hidden bg-surface-2">
+        {!sizer &&
+          (artworkIsLink ? (
+            <a
+              href={project.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open the ${project.title} live site`}
+              onClick={(e) => {
+                // A swipe that ends on the artwork still fires a click.
+                if (draggedRef.current) e.preventDefault();
+              }}
+              className="group/art block h-full w-full"
+            >
+              <Media project={project} isActive={isActive} />
+              {/* Hover affordance. The artwork is a link, so it has to say
+                  so. Appears on hover and on keyboard focus. */}
+              <span className="pointer-events-none absolute inset-0 bg-bg/0 transition-colors duration-300 group-hover/art:bg-bg/20" />
+              <span className="pointer-events-none absolute right-4 top-4 z-10 flex translate-y-1 items-center gap-1.5 rounded-full border border-border bg-bg/80 px-3 py-1.5 text-[11px] text-fg opacity-0 backdrop-blur transition-all duration-300 group-hover/art:translate-y-0 group-hover/art:opacity-100 group-focus-visible/art:translate-y-0 group-focus-visible/art:opacity-100 [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100">
+                Open live site ↗
+              </span>
+            </a>
+          ) : (
+            <Media project={project} isActive={isActive} />
+          ))}
 
         {/* status chip */}
-        <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-border bg-bg/70 px-3 py-1 text-[11px] backdrop-blur">
+        <div className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full border border-border bg-bg/70 px-3 py-1 text-[11px] backdrop-blur">
           <span
             className={`h-1.5 w-1.5 rounded-full ${
               project.status === "live"
@@ -282,7 +326,7 @@ function Card({
           </ul>
         </div>
 
-        {/* Actions are only reachable on the active card — inactive cards are
+        {/* Actions are only reachable on the active card. Inactive cards are
             scaled down and blurred, so their buttons shouldn't be tab stops. */}
         <div
           className={`flex shrink-0 items-center gap-2 ${
@@ -298,17 +342,9 @@ function Card({
               Case study
             </Link>
           )}
-          {project.href && (
-            <a
-              href={project.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              tabIndex={isActive ? 0 : -1}
-              className="rounded-full border border-border px-4 py-2 text-xs text-muted transition-colors hover:border-accent/40 hover:text-fg"
-            >
-              Live ↗
-            </a>
-          )}
+          {/* No "Live" button here on purpose. The artwork above is already a
+              link to the live site, and two routes to the same place one row
+              apart is just noise. */}
           {project.repo && (
             <a
               href={project.repo}
@@ -327,7 +363,7 @@ function Card({
 }
 
 /* ==========================================================================
- * Media — video when active, poster otherwise.
+ * Media. Video when active, poster otherwise.
  * Only one video is ever playing, which keeps this cheap.
  * ========================================================================*/
 
@@ -341,7 +377,7 @@ function Media({ project, isActive }: { project: Project; isActive: boolean }) {
   const imgRef = useRef<HTMLImageElement>(null);
 
   // The onError prop alone isn't enough: the image is server-rendered, so a
-  // 404 usually fires while the HTML is still parsing — before React attaches
+  // 404 usually fires while the HTML is still parsing. Before React attaches
   // the handler. Re-check the decoded state on mount to catch those.
   useEffect(() => {
     const img = imgRef.current;
@@ -353,7 +389,7 @@ function Media({ project, isActive }: { project: Project; isActive: boolean }) {
     if (!v) return;
     if (isActive && !reduce) {
       v.play().catch(() => {
-        /* autoplay blocked — poster stays up, no harm */
+        /* autoplay blocked. Poster stays up, no harm */
       });
     } else {
       v.pause();

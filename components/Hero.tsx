@@ -7,8 +7,8 @@ import { site } from "@/lib/site";
 /**
  * Hero.
  *
- * The greeting types across two lines — "Hi," lands, then the name follows
- * underneath — and only once that finishes do the tagline and buttons fade up.
+ * The greeting types across two lines. "Hi," lands, then the name follows
+ * underneath. And only once that finishes do the tagline and buttons fade up.
  * Sequenced so it reads as one gesture rather than three things happening at
  * once.
  *

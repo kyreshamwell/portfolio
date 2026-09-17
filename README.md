@@ -1,6 +1,6 @@
 # Portfolio
 
-Personal portfolio site — a one-page showcase with dedicated case study routes.
+Personal portfolio site. A one-page showcase with dedicated case study routes.
 
 **Live:** _TODO: add the deployed URL once it's up._
 
@@ -9,11 +9,11 @@ Personal portfolio site — a one-page showcase with dedicated case study routes
 
 ## Stack
 
-- **Next.js** (App Router) — fully static; every route is prerendered
+- **Next.js** (App Router). Fully static; every route is prerendered
 - **TypeScript**
-- **Tailwind CSS v4** — CSS-first config, tokens defined in `app/globals.css`
-- **Motion** — the 3D project carousel
-- **Lenis** — smooth scroll
+- **Tailwind CSS v4**. CSS-first config, tokens defined in `app/globals.css`
+- **Motion**. The 3D project carousel
+- **Lenis**. Smooth scroll
 
 No database, no API routes, no server. It builds to flat files on a CDN.
 
@@ -38,7 +38,7 @@ npx tsc --noEmit   # type-check only
 
 ## Where the content lives
 
-All copy and project data is in two files — no need to touch components to
+All copy and project data is in two files. No need to touch components to
 change what the site says.
 
 | File | Holds |
@@ -46,7 +46,7 @@ change what the site says.
 | `lib/site.ts` | Name, hero greeting, rotating roles, tagline, email, social links, résumé path, About paragraphs |
 | `lib/projects.ts` | Every project: card copy, status, stack, media paths, links, and the case study body |
 
-Project media goes in `public/media/` — see the README there for formats and
+Project media goes in `public/media/`. See the README there for formats and
 sizing. Until artwork exists, the carousel shows a placeholder rather than a
 broken image.
 
@@ -81,5 +81,5 @@ lib/
   transitions, and shows its content immediately if the observer never fires
   or the element is already on screen. Text should never be invisible because
   an animation didn't run.
-- **Reduced motion** is respected in both JS and CSS — the loader, typewriter,
+- **Reduced motion** is respected in both JS and CSS. The loader, typewriter,
   carousel, and reveals all check it.
