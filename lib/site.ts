@@ -22,9 +22,14 @@ export const site = {
   // Used in the browser tab title and social previews, not shown on the page.
   subline: "Software engineer",
 
-  // The rotating line under the greeting. Two entries cycle cleanly; keep
-  // them short, since they loop forever.
-  roles: ["Software engineer.", "Computer science graduate."],
+  // The rotating line under the greeting, typed in this order on a loop. The
+  // hero reserves room for the longest entry, so a long one wrapping on a
+  // phone won't shove the page around.
+  roles: [
+    "Software engineer.",
+    "North Carolina Agricultural and Technical State University alum.",
+    "Computer science graduate.",
+  ],
 
   // TODO: real email. Shown in full and used as a mailto: link.
   email: "kmshamwell@gmail.com",

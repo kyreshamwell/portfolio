@@ -18,6 +18,8 @@ import { site } from "@/lib/site";
 
 const LEAD_MS = 1100;
 
+const longestRole = site.roles.reduce((a, b) => (a.length > b.length ? a : b), "");
+
 export function Hero() {
   const [line1Done, setLine1Done] = useState(false);
   const [line2Done, setLine2Done] = useState(false);
@@ -68,12 +70,22 @@ export function Hero() {
         </h1>
 
         {/* Rotating line. Waits for the greeting to finish so two carets are
-            never blinking at once. min-h reserves the row so the tagline
-            below doesn't shift as the text cycles. */}
-        <p className="mt-4 min-h-[1.6em] text-lg text-accent sm:text-2xl">
-          {line2Done && (
-            <Typewriter words={site.roles} typeMs={55} deleteMs={28} />
-          )}
+            never blinking at once. The longest role sits invisibly in the
+            same grid cell as the typed text, so the row is always as tall as
+            that role at the current width. A fixed min-h can't do that: the
+            school name wraps to several lines on a phone, and the tagline
+            would jump every time it was typed and deleted. */}
+        <p className="mt-4 grid text-lg text-accent sm:text-2xl">
+          <span aria-hidden className="invisible col-start-1 row-start-1">
+            {longestRole}
+            {/* caret allowance, matching the Typewriter's cursor */}
+            <span className="ml-0.5 inline-block w-[0.06em]" />
+          </span>
+          <span className="col-start-1 row-start-1">
+            {line2Done && (
+              <Typewriter words={site.roles} typeMs={55} deleteMs={28} />
+            )}
+          </span>
         </p>
 
         <div
