@@ -26,6 +26,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 const SECTIONS = [
   { id: "work", label: "Work" },
   { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
 ];
 

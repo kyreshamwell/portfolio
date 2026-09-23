@@ -1,5 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
+import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
 import { Reveal } from "@/components/Reveal";
 import { ProjectCarousel } from "@/components/ProjectCarousel";
@@ -41,6 +42,7 @@ export default function Home() {
       </section>
 
       <About />
+      <Experience />
       <Contact />
     </main>
   );
