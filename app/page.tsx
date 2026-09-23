@@ -12,10 +12,15 @@ export default function Home() {
       {/* ---- WORK ------------------------------------------------------
           Elevation step up from the page background. Barely perceptible on
           its own. That's the point. It creates a section boundary without
-          introducing a second colour. */}
+          introducing a second colour.
+          overflow-x-clip: the carousel's side cards sit past the screen edge
+          by design. Without the clip, phones widen the whole page to fit
+          them, which pushes the header off screen and lets the page pan
+          sideways. clip rather than hidden, so the cards' shadows still spill
+          vertically. */}
       <section
         id="work"
-        className="flex min-h-screen flex-col justify-center border-y border-border bg-surface/40 px-5 py-10 sm:px-8 sm:py-12"
+        className="flex min-h-screen flex-col justify-center overflow-x-clip border-y border-border bg-surface/40 px-5 py-10 sm:px-8 sm:py-12"
       >
         <div className="mx-auto w-full max-w-6xl">
           <Reveal>
