@@ -120,6 +120,59 @@ export const projects: Project[] = [
   },
 
   {
+    slug: "pushed",
+    title: "Pushed",
+    blurb:
+      "Your GitHub contribution graph as a Home Screen widget. Keep the streak alive without opening GitHub.",
+    status: "live",
+    year: "2026",
+    stack: ["Swift", "SwiftUI", "WidgetKit", "App Intents", "GitHub GraphQL"],
+    video: "", // the landing page has the 43s launch demo. Trim 8-15s of it for here
+    poster: "/media/pushed.jpg",
+    href: "https://pushed-landing.vercel.app", // landing page, which links to the App Store
+    repo: "https://github.com/kyreshamwell/git-widget",
+    caseStudy: true,
+    sections: [
+      {
+        heading: "Why I built it",
+        body: [
+          "I wanted to code every day. I saw someone on Reels post their GitHub contribution graph with a green square for every day, and I didn't care much at first, but the idea stuck. If the goal is to build something every day, the graph is the scoreboard, and an app whose only job is to keep that streak in front of me makes the goal a lot harder to quietly drop.",
+          "Shipping an iOS app was also one of my goals for the year. I had built plenty for the web, but a different app I tried earlier in the year didn't work out. A widget felt like the right way to start small: something you can finish, and something you see every time you pick up your phone.",
+          "It was never only about my own streak. I made a video of it for TikTok and Instagram so other people could set a goal of their own, and I made it free so anyone could use it and so I'd get as much feedback as possible.",
+        ],
+      },
+      {
+        heading: "What it does",
+        body: [
+          "Pushed puts your contribution graph on your Home Screen as a widget in small, medium or large, covering anything from one month to a full year. It refreshes in the background, so where your streak stands is something you see when you unlock your phone rather than something you go and check. Today counts toward the streak once you've pushed, and until then it shows your count through yesterday, so it doesn't drop to zero at breakfast.",
+          "Every widget keeps its own look. There are built-in styles like Classic, Terminal and Paper, a layout that leads with a big streak number, and an editor for designing your own. Custom styles work out their text colors from contrast rules, so no combination of colors can make the widget unreadable.",
+        ],
+      },
+      {
+        heading: "Decisions",
+        body: [
+          "No backend. The app talks to GitHub directly with your own read-only token, which lives in the iOS Keychain and is shared with the widget, and the last result is cached so the widget draws instantly instead of waiting on the network. There is no account, no analytics, and no server of mine for your data to pass through. That also means nothing to pay for per user, which is part of how it stays free. The cost is setup: instead of a Sign in with GitHub button, you create a personal access token and paste it in, which is a real ask for a free app. And with no server, nothing can push an update to your phone either. iOS decides when the widget refreshes, and reminders have to be worked out on the phone and handed to iOS ahead of time.",
+          "Reminders that only speak when there's a reason. The easy version is a daily alarm, and that's the version people turn off. Pushed decides what to send from your actual graph. If you've pushed today, it stays quiet unless you just hit a milestone. If you pushed yesterday but not today, your streak is on the line, so you get a midday heads-up and an evening warning. If the streak is already gone, the reminders taper off: daily for the first week, then every third day, then weekly, then nothing after two months. An app that nags you every day for a month gets deleted before you ever come back.",
+          "Testing is something I've taken up on my own, to make sure things actually work the way I meant them to, and reminders are where that matters most. A wrong one is worse than none. So the rules that decide what to send are kept separate from the code that hands notifications to iOS, which lets them be tested without waiting on a real clock, and more than half of the project's tests are about reminders. Two of those rules keep the numbers honest. Nothing is scheduled past today, because tomorrow's streak depends on whether you push. And a reminder never quotes a number from data more than a day old. Stale data means silence, not a confident wrong number.",
+        ],
+      },
+      {
+        heading: "What broke",
+        body: [
+          "The first version treated every 403 from GitHub as a dead token. GitHub also sends a 403 when it's rate limiting you, so a background refresh that landed at a busy moment would tell you your token had stopped working. Worse, a dead token also switches off the commit reminders, because nagging someone with numbers the app can't verify is worse than saying nothing. One busy hour on GitHub's side could make Pushed go quiet until you replaced a token that was never broken.",
+          "The fix was reading the response headers instead of just the status code. A rate limit comes with a retry-after header or a remaining count of zero, and a revoked token has neither. A throttled refresh now keeps your last graph on screen and the reminders running, then tries again on the next refresh. The only way to be told your token is dead is for GitHub to give no sign of throttling at all. The status code said the same thing in both cases. The headers were where the difference was.",
+        ],
+      },
+      {
+        heading: "What's next",
+        body: [
+          "Pushed is free so that people actually try it, and the feedback decides what changes next, or what carries into the next app. The longer-term goal is an app that makes money: something people see as a tool they'd use every day, the way I use this one.",
+        ],
+      },
+    ],
+  },
+
+  {
     slug: "split-screen",
     title: "Split Screen",
     blurb:
@@ -144,26 +197,6 @@ export const projects: Project[] = [
         body: [
           "TODO: The Accessibility API, global hotkey capture, multi-display handling. This is genuine systems work, so say enough that a reader understands it isn't a wrapper around a library.",
         ],
-      },
-    ],
-  },
-
-  {
-    slug: "ios-app",
-    title: "TODO: iOS App Name",
-    blurb: "TODO: one line saying what it does for the person using it.",
-    status: "in-review",
-    year: "2026",
-    stack: ["Swift", "SwiftUI"],
-    video: "",
-    poster: "/media/ios-app.jpg", // TODO
-    href: "", // App Store URL once approved, TestFlight link until then
-    repo: "",
-    caseStudy: false,
-    sections: [
-      {
-        heading: "The problem",
-        body: ["TODO"],
       },
     ],
   },
