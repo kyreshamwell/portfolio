@@ -24,7 +24,7 @@ npm install
 npm run dev
 ```
 
-Then open http://localhost:3000.
+Then open http://localhost:3000. Requires Node 18.18 or newer (Next.js 15).
 
 ```bash
 npm run build   # production build
