@@ -83,3 +83,6 @@ lib/
   an animation didn't run.
 - **Reduced motion** is respected in both JS and CSS. The loader, typewriter,
   carousel, and reveals all check it.
+- **Content lives in `lib/`.** Site copy and the project list are plain data
+  in `site.ts` and `projects.ts`, so updating the portfolio never means
+  touching a component.
