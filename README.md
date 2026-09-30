@@ -29,6 +29,7 @@ Then open http://localhost:3000. Requires Node 18.18 or newer (Next.js 15).
 ```bash
 npm run build   # production build
 npx tsc --noEmit   # type-check only
+npm run lint       # ESLint via next lint
 ```
 
 > **Note:** don't run `npm run build` while `next dev` is running. Both write
