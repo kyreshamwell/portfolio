@@ -21,7 +21,7 @@ import { useEffect, useRef, useState } from "react";
  * on each callback. When nothing is on screen, the winner is "" and the nav
  * goes quiet.
  */
-export function useScrollSpy(ids: string[]) {
+export function useScrollSpy(ids: string[]) { 
   const [active, setActive] = useState("");
   const ratios = useRef<Record<string, number>>({});
 
