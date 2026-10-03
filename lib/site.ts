@@ -5,7 +5,7 @@
 
 export const site = {
   // TODO: your full name, as you want it read.
-  name: "Kyre Shamwell",
+  name: "Kyre Shamwell", 
 
   // The positioning line, and the single most important sentence on the site.
   // It deliberately names no projects: the carousel below is the evidence, so
